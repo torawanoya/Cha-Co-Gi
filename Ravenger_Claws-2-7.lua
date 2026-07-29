@@ -117,9 +117,6 @@ RW.Name="Right Shoulder" LW.Name="Left Shoulder"
 LH=Torso["Left Hip"]
 RH=Torso["Right Hip"]
 TorsoColor=Torso.BrickColor
-function NoOutline(Part)
-	Part.TopSurface,Part.BottomSurface,Part.LeftSurface,Part.RightSurface,Part.FrontSurface,Part.BackSurface = 10,10,10,10,10,10
-end
 player=Player
 ch=Character
 RSH=ch.Torso["Right Shoulder"]
@@ -141,47 +138,6 @@ LW.C0=cf(-1.5, 0.5, 0)
 LW.C1=cf(0, 0.5, 0)
 LW.Part1=ch["Left Arm"]
 LW.Parent=ch.Torso
-
-function part(formfactor,parent,reflectance,transparency,brickcolor,name,size)
-	local fp=it("Part")
-	fp.formFactor=formfactor
-	fp.Parent=parent
-	fp.Reflectance=reflectance
-	fp.Transparency=transparency
-	fp.CanCollide=false
-	fp.Locked=true
-	fp.BrickColor=brickcolor
-	fp.Name=name
-	fp.Size=size
-	fp.Position=Torso.Position
-	NoOutline(fp)
-	fp.Material="Neon"
-	fp:BreakJoints()
-	return fp
-end
-
-function mesh(Mesh,part,meshtype,meshid,offset,scale)
-	local mesh=it(Mesh)
-	mesh.Parent=part
-	if Mesh=="SpecialMesh" then
-		mesh.MeshType=meshtype
-		if meshid~="nil" then
-			mesh.MeshId="http://www.roblox.com/asset/?id="..meshid
-		end
-	end
-	mesh.Offset=offset
-	mesh.Scale=scale
-	return mesh
-end
-
-function weld(parent,part0,part1,c0)
-	local weld=it("Weld")
-	weld.Parent=parent
-	weld.Part0=part0
-	weld.Part1=part1
-	weld.C0=c0
-	return weld
-end
 
 local Color1=Torso.BrickColor
 
@@ -290,233 +246,6 @@ end
 
 function rayCast(Pos, Dir, Max, Ignore)
 	return game:service("Workspace"):FindPartOnRay(Ray.new(Pos, Dir.unit * (Max or 999.999)), Ignore)
-end
-
-function SkullEffect(brickcolor,cframe,x1,y1,z1,delay)
-	local prt=part(3,workspace,0,0,brickcolor,"Effect",vt(0.5,0.5,0.5))
-	prt.Anchored=true
-	prt.CFrame=cframe
-	local msh=mesh("SpecialMesh",prt,"FileMesh","http://www.roblox.com/asset/?id=4770583",vt(0,0,0),vt(x1,y1,z1))
-
-	game:GetService("Debris"):AddItem(prt,2)
-	CF=prt.CFrame
-	coroutine.resume(coroutine.create(function(Part,Mesh,TehCF)
-		for i=0,1,0.2 do
-			wait()
-			Part.CFrame=CF*cf(0,0,-0.4)
-		end
-		for i=0,1,delay do
-			wait()
-
-			Mesh.Scale=Mesh.Scale
-		end
-		for i=0,1,0.1 do
-			wait()
-			Part.Transparency=i
-		end
-		Part.Parent=nil
-	end),prt,msh,CF)
-end
-
-function MagicBlock(brickcolor,cframe,x1,y1,z1,x3,y3,z3,delay)
-	local prt=part(3,workspace,0,0,brickcolor,"Effect",vt(0.5,0.5,0.5))
-	prt.Anchored=true
-	prt.CFrame=cframe
-	msh=mesh("BlockMesh",prt,"","",vt(0,0,0),vt(x1,y1,z1))
-	game:GetService("Debris"):AddItem(prt,5)
-	coroutine.resume(coroutine.create(function(Part,Mesh)
-		for i=0,1,delay do
-			wait()
-			Part.CFrame=Part.CFrame*euler(math.random(-50,50),math.random(-50,50),math.random(-50,50))
-			Part.Transparency=i
-			Mesh.Scale=Mesh.Scale+vt(x3,y3,z3)
-		end
-		Part.Parent=nil
-	end),prt,msh)
-end
-
-function MagicBlock2(brickcolor,cframe,Parent,x1,y1,z1,x3,y3,z3,delay)
-	local prt=part(3,workspace,0,0,brickcolor,"Effect",vt(0.5,0.5,0.5))
-	prt.Anchored=false
-	prt.CFrame=cframe
-	msh=mesh("BlockMesh",prt,"","",vt(0,0,0),vt(x1,y1,z1))
-	local wld=weld(prt,prt,Parent,cframe)
-	game:GetService("Debris"):AddItem(prt,5)
-	coroutine.resume(coroutine.create(function(Part,Mesh,Weld)
-		for i=0,1,delay do
-			wait()
-			Weld.C0=euler(math.random(-50,50),math.random(-50,50),math.random(-50,50))*cframe
-
-			Part.Transparency=i
-			Mesh.Scale=Mesh.Scale+vt(x3,y3,z3)
-		end
-		Part.Parent=nil
-	end),prt,msh,wld)
-end
-
-function MagicBlock3(brickcolor,cframe,Parent,x1,y1,z1,x3,y3,z3,delay)
-	local prt=part(3,workspace,0,0,brickcolor,"Effect",vt(0.5,0.5,0.5))
-	prt.Anchored=false
-	prt.CFrame=cframe
-	msh=mesh("BlockMesh",prt,"","",vt(0,0,0),vt(x1,y1,z1))
-	local wld=weld(prt,prt,Parent,euler(0,0,0)*cf(0,0,0))
-	game:GetService("Debris"):AddItem(prt,5)
-	coroutine.resume(coroutine.create(function(Part,Mesh,Weld)
-		for i=0,1,delay do
-			wait()
-			Weld.C0=euler(i*20,0,0)
-
-			Part.Transparency=i
-			Mesh.Scale=Mesh.Scale+vt(x3,y3,z3)
-		end
-		Part.Parent=nil
-	end),prt,msh,wld)
-end
-
-function MagicCircle2(brickcolor,cframe,x1,y1,z1,x3,y3,z3,delay)
-	local prt=part(3,workspace,0,0,brickcolor,"Effect",vt(0.5,0.5,0.5))
-	prt.Anchored=true
-	prt.CFrame=cframe
-	local msh=mesh("CylinderMesh",prt,"","",vt(0,0,0),vt(x1,y1,z1))
-	game:GetService("Debris"):AddItem(prt,2)
-	coroutine.resume(coroutine.create(function(Part,Mesh)
-		for i=0,1,delay do
-			wait()
-			Part.CFrame=Part.CFrame
-			Mesh.Scale=Mesh.Scale+vt(x3,y3,z3)
-			local prt2=part(3,workspace,0,0,brickcolor,"Effect",vt(0.5,0.5,0.5))
-			prt2.Anchored=true
-			prt2.CFrame=cframe*euler(math.random(-50,50),math.random(-50,50),math.random(-50,50))
-			local msh2=mesh("SpecialMesh",prt2,"Sphere","",vt(0,0,0),vt(0.5,0.5,0.5))
-			game:GetService("Debris"):AddItem(prt2,2)
-			coroutine.resume(coroutine.create(function(Part,Mesh)
-				for i=0,1,0.1 do
-					wait()
-					Part.CFrame=Part.CFrame*cf(0,0.5,0)
-				end
-				Part.Parent=nil
-			end),prt2,msh2)
-		end
-		for i=0,1,delay*2 do
-			wait()
-			Part.CFrame=Part.CFrame
-			Mesh.Scale=vt((x1+x3)-(x1+x3)*i,(y1+y3)-(y1+y3)*i,(z1+z3)-(z1+z3)*i)
-		end
-		Part.Parent=nil
-	end),prt,msh)
-end
-
-function MagicCircle(brickcolor,cframe,x1,y1,z1,x3,y3,z3,delay)
-	local prt=part(3,workspace,0,0,brickcolor,"Effect",vt(0.5,0.5,0.5))
-	prt.Anchored=true
-	prt.CFrame=cframe
-	local msh=mesh("SpecialMesh",prt,"Sphere","",vt(0,0,0),vt(x1,y1,z1))
-	game:GetService("Debris"):AddItem(prt,2)
-	coroutine.resume(coroutine.create(function(Part,Mesh)
-		for i=0,1,delay do
-			wait()
-			Part.CFrame=Part.CFrame
-			Part.Transparency=i
-			Mesh.Scale=Mesh.Scale+vt(x3,y3,z3)
-		end
-		Part.Parent=nil
-	end),prt,msh)
-end
-
-function MagicRing(brickcolor,cframe,x1,y1,z1,x2,y2,z2,x3,y3,z3)
-	local prt=part(3,workspace,0,0,brickcolor,"Effect",vt(0.5,0.5,0.5))
-	prt.Anchored=true
-	prt.CFrame=cframe*euler(x2,y2,z2)
-
-	local msh=mesh("SpecialMesh",prt,"FileMesh","http://www.roblox.com/asset/?id=3270017",vt(0,0,0),vt(x1,y1,z1))
-	game:GetService("Debris"):AddItem(prt,2)
-	coroutine.resume(coroutine.create(function(Part,Mesh)
-		for i=0,1,0.03 do
-			wait()
-			Part.CFrame=Part.CFrame
-			Part.Transparency=i
-			Mesh.Scale=Mesh.Scale+vt(x3,y3,z3)
-		end
-		Part.Parent=nil
-	end),prt,msh)
-end
-
-function BreakEffect(brickcolor,cframe,x1,y1,z1)
-	local prt=part(3,workspace,0,0,brickcolor,"Effect",vt(0.5,0.5,0.5))
-	prt.Anchored=true
-	prt.CFrame=cframe*euler(math.random(-50,50),math.random(-50,50),math.random(-50,50))
-	local msh=mesh("SpecialMesh",prt,"Sphere","",vt(0,0,0),vt(x1,y1,z1))
-	game:GetService("Debris"):AddItem(prt,2)
-	coroutine.resume(coroutine.create(function(Part,CF,Numbb,randnumb)
-		CF=Part.CFrame
-		Numbb=0
-		randnumb=math.random()/10
-		rand1=math.random()/10
-		for i=0,1,rand1 do
-			wait()
-			CF=CF*cf(0,math.random()/2,0)
-
-			Part.CFrame=CF*euler(Numbb,0,0)
-			Part.Transparency=i
-			Numbb=Numbb+randnumb
-		end
-		Part.Parent=nil
-	end),prt,CF,Numbb,randnumb)
-end
-
-function MagicWaveThing(brickcolor,cframe,x1,y1,z1,x3,y3,z3,delay)
-	local prt=part(3,workspace,0,0,brickcolor,"Effect",vt(0.5,0.5,0.5))
-	prt.Anchored=true
-	prt.CFrame=cframe
-	msh=mesh("SpecialMesh",prt,"FileMesh","http://www.roblox.com/asset/?id=1051557",vt(0,0,0),vt(x1,y1,z1))
-	game:GetService("Debris"):AddItem(prt,5)
-	coroutine.resume(coroutine.create(function(Part,Mesh)
-		for i=0,1,delay do
-			wait()
-			Part.CFrame=Part.CFrame*euler(0,0.7,0)
-			Part.Transparency=i
-			Mesh.Scale=Mesh.Scale+vt(x3,y3,z3)
-		end
-		Part.Parent=nil
-	end),prt,msh)
-end
-
-function WaveEffect(brickcolor,cframe,x1,y1,z1,x3,y3,z3,delay)
-	local prt=part(3,workspace,0,0,brickcolor,"Effect",vt(0.5,0.5,0.5))
-	prt.Anchored=true
-	prt.CFrame=cframe
-	msh=mesh("SpecialMesh",prt,"FileMesh","http://www.roblox.com/asset/?id=20329976",vt(0,0,0),vt(x1,y1,z1))
-	game:GetService("Debris"):AddItem(prt,2)
-	coroutine.resume(coroutine.create(function(Part,Mesh)
-		for i=0,1,delay do
-			wait()
-			Part.CFrame=Part.CFrame*cf(0,y3/2,0)
-			Part.Transparency=i
-			Mesh.Scale=Mesh.Scale+vt(x3,y3,z3)
-		end
-		Part.Parent=nil
-	end),prt,msh)
-end
-
-function StravEffect(brickcolor,cframe,x,y,z,x1,y1,z1,delay)
-	local prt=part(3,workspace,0,0,brickcolor,"Effect",vt(0.5,0.5,0.5))
-	prt.Anchored=true
-	prt.CFrame=cframe*cf(x,y,z)
-	msh=mesh("SpecialMesh",prt,"FileMesh","rbxassetid://168892363",vt(0,0,0),vt(x1,y1,z1))
-	game:GetService("Debris"):AddItem(prt,5)
-	coroutine.resume(coroutine.create(function(Part,Mesh,ex,why,zee)
-		local num=math.random()
-		local num2=math.random(-3,2)+math.random()
-		local numm=0
-		for i=0,1,delay*2 do
-			swait()
-			Part.CFrame=cframe*euler(0,numm*num*10,0)*cf(ex,why,zee)*cf(-i*10,num2,0)
-			Part.Transparency=i
-			numm=numm+0.01
-		end
-		Part.Parent=nil
-		Mesh.Parent=nil
-	end),prt,msh,x,y,z)
 end
 
 Damagefunc=function(hit,minim,maxim,knockback,Type,Property,Delay,KnockbackType,decreaseblock)
@@ -985,23 +714,6 @@ mouse.KeyDown:connect(function(k)
 		end
 	end
 end)
-
-function MagicCircle(brickcolor,cframe,x1,y1,z1,x3,y3,z3,delay)
-	local prt=part(3,workspace,0,0,brickcolor,"Effect",vt(0.5,0.5,0.5))
-	prt.Anchored=true
-	prt.CFrame=cframe
-	local msh=mesh("SpecialMesh",prt,"Sphere","",vt(0,0,0),vt(x1,y1,z1))
-	game:GetService("Debris"):AddItem(prt,2)
-	coroutine.resume(coroutine.create(function(Part,Mesh)
-		for i=0,1,delay do
-			wait()
-			Part.CFrame=Part.CFrame
-			Part.Transparency=i
-			Mesh.Scale=Mesh.Scale+vt(x3,y3,z3)
-		end
-		Part.Parent=nil
-	end),prt,msh)
-end
 
 TrailDeb = false
 
@@ -1511,22 +1223,6 @@ function BlastEffect(brickcolor, cframe, x1, y1, z1, x2, y2, z2)
 		end
 		prt.Parent = nil
 	end))
-end
-
-function MagniDamage(Hit, Part, magni, mindam, maxdam, knock, Type)
-	for _, c in pairs(workspace:children()) do
-		local hum = c:findFirstChild("Humanoid")
-		if hum ~= nil then
-			local head = c:findFirstChild("Torso")
-			if head ~= nil then
-				local targ = head.Position - Part.Position
-				local mag = targ.magnitude
-				if mag <= magni and c.Name ~= Player.Name then
-					Damagefunc(Hit, head, mindam, maxdam, knock, Type, RootPart, .2, 1, 3)
-				end
-			end
-		end
-	end
 end
 
 function MagicCircle(brickcolor, cframe, x1, y1, z1, x3, y3, z3, delay)
@@ -2386,144 +2082,151 @@ function Hai()
 	attack=false
 end
 
-function Die()
-	attack=true
-	Footsteps:Stop()
-	Footsteps2:Stop()
-	local Fire = it("Sound",Character.Torso)
-	Fire.SoundId = "rbxassetid://192104941"
-	Fire.Looped = true
-	Fire.Pitch = 1
-	Fire.Volume = 1
-	local Fire2 = it("Sound",Handle2)
-	Fire2.SoundId = "rbxassetid://192104941"
-	Fire2.Looped = true
-	Fire2.Pitch = 1
-	Fire2.Volume = 1
-	local Fire3 = it("Sound",Handle)
-	Fire3.SoundId = "rbxassetid://192104941"
-	Fire3.Looped = true
-	Fire3.Pitch = 1
-	Fire3.Volume = 1
-	local Fire4 = it("Sound",handle)
-	Fire4.SoundId = "rbxassetid://192104941"
-	Fire4.Looped = true
-	Fire4.Pitch = 1
-	Fire4.Volume = 1
-	local fire = Instance.new("ParticleEmitter", Character.Torso)
-	fire.Lifetime = NumberRange.new(0.5)
-	fire.Speed = NumberRange.new(1, 3)
-	fire.Size = NumberSequence.new({NumberSequenceKeypoint.new(0, 3.564, 2.521), NumberSequenceKeypoint.new(1, 3.534, 2.521)})
-	fire.Rate = 0
-	fire.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0, 0), NumberSequenceKeypoint.new(0.627, 0.587), NumberSequenceKeypoint.new(1, 1)})
-	fire.LightEmission = 0.6
-	fire.Texture = "http://www.roblox.com/asset/?id=242911609"
-	fire.Color = ColorSequence.new(Color3.new(1, 0, 0), Color3.new(1, 0.666667, 0))
-	local fire2 = Instance.new("ParticleEmitter", Handle)
-	fire2.Lifetime = NumberRange.new(0.5)
-	fire2.Speed = NumberRange.new(1, 3)
-	fire2.Size = NumberSequence.new({NumberSequenceKeypoint.new(0, 6.564, 5.521), NumberSequenceKeypoint.new(1, 6.534, 5.521)})
-	fire2.Rate = 0
-	fire2.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0, 0), NumberSequenceKeypoint.new(0.627, 0.587), NumberSequenceKeypoint.new(1, 1)})
-	fire2.LightEmission = 0.6
-	fire2.Texture = "http://www.roblox.com/asset/?id=242911609"
-	fire2.Color = ColorSequence.new(Color3.new(1, 0, 0), Color3.new(1, 0.666667, 0))
-	local fire3 = Instance.new("ParticleEmitter", Handle2)
-	fire3.Lifetime = NumberRange.new(0.5)
-	fire3.Speed = NumberRange.new(1, 3)
-	fire3.Size = NumberSequence.new({NumberSequenceKeypoint.new(0, 6.564, 5.521), NumberSequenceKeypoint.new(1, 6.534, 5.521)})
-	fire3.Rate = 0
-	fire3.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0, 0), NumberSequenceKeypoint.new(0.627, 0.587), NumberSequenceKeypoint.new(1, 1)})
-	fire3.LightEmission = 0.6
-	fire3.Texture = "http://www.roblox.com/asset/?id=242911609"
-	fire3.Color = ColorSequence.new(Color3.new(1, 0, 0), Color3.new(1, 0.666667, 0))
-	local fire4 = Instance.new("ParticleEmitter", handle)
-	fire4.Lifetime = NumberRange.new(0.5)
-	fire4.Speed = NumberRange.new(1, 3)
-	fire4.Size = NumberSequence.new({NumberSequenceKeypoint.new(0, 3.564, 2.521), NumberSequenceKeypoint.new(1, 3.534, 2.521)})
-	fire4.Rate = 0
-	fire4.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0, 0), NumberSequenceKeypoint.new(0.627, 0.587), NumberSequenceKeypoint.new(1, 1)})
-	fire4.LightEmission = 0.6
-	fire4.Texture = "http://www.roblox.com/asset/?id=242911609"
-	fire4.Color = ColorSequence.new(Color3.new(1, 0, 0), Color3.new(1, 0.666667, 0))
-	Humanoid.WalkSpeed = 0
-	so("http://www.roblox.com/asset/?id=199149297",Head,1,1)
-	so("http://www.roblox.com/asset/?id=209527203",Head,1,1)
-	for i=0,1,0.08 do
-		swait()
-		Torso.Velocity=RootPart.CFrame.lookVector*-30
-		RootJoint.C0=clerp(RootJoint.C0,RootCF*cf(0,1,0)*angles(math.rad(-45),math.rad(0),math.rad(90)),.2)
-		Torso.Neck.C0=clerp(Torso.Neck.C0,necko*angles(math.rad(0),math.rad(0),math.rad(45)),.2)
-		handleweld.C0=clerp(handleweld.C0,cf(0,5,0)*angles(math.rad(45),math.rad(0),math.rad(0)),.2)
-		Handleweld.C0=clerp(Handleweld.C0,cf(0,5,0)*angles(math.rad(45),math.rad(0),math.rad(0)),.2)
-		Handle2weld.C0=clerp(Handle2weld.C0,cf(0,5,0)*angles(math.rad(45),math.rad(0),math.rad(0)),.2)
-		RW.C0=clerp(RW.C0,cf(1.5,0.5,0)*angles(math.rad(90),math.rad(0),math.rad(45)),.2)
-		LW.C0=clerp(LW.C0,cf(-1.5,0.5,0)*angles(math.rad(0),math.rad(0),math.rad(-45)),.2)
-		RH.C0=clerp(RH.C0,cf(1,-1,0)*angles(math.rad(0),math.rad(90),math.rad(0))*angles(math.rad(-10),math.rad(0),math.rad(0)),.2)
-		LH.C0=clerp(LH.C0,cf(-1,-1,0)*angles(math.rad(0),math.rad(-90),math.rad(0))*angles(math.rad(-10),math.rad(0),math.rad(0)),.2)
-	end
-	for i=0,1,0.005 do
-		swait()
-		moosick.Volume=1-2*i
-		light.Range=15-10*i
-		RootJoint.C0=clerp(RootJoint.C0,RootCF*cf(0,1,-2.5)*angles(math.rad(-90),math.rad(0),math.rad(180)),.2)
-		Torso.Neck.C0=clerp(Torso.Neck.C0,necko*angles(math.rad(0),math.rad(0),math.rad(90)),.4)
-		handleweld.C0=clerp(handleweld.C0,cf(0,10,-5)*angles(math.rad(60),math.rad(30),math.rad(30)),.2)
-		Handleweld.C0=clerp(Handleweld.C0,cf(0,20,-5)*angles(math.rad(150),math.rad(0),math.rad(0)),.2)
-		Handle2weld.C0=clerp(Handle2weld.C0,cf(0,20,-5)*angles(math.rad(90),math.rad(0),math.rad(0)),.2)
-		RW.C0=clerp(RW.C0,cf(1.5,0.5,0)*angles(math.rad(180),math.rad(0),math.rad(90)),.2)
-		LW.C0=clerp(LW.C0,cf(-1.5,0.5,0)*angles(math.rad(0),math.rad(0),math.rad(-90)),.2)
-		RH.C0=clerp(RH.C0,cf(1,-1,0)*angles(math.rad(0),math.rad(90),math.rad(0))*angles(math.rad(-20),math.rad(0),math.rad(0)),.2)
-		LH.C0=clerp(LH.C0,cf(-1,-1,0)*angles(math.rad(0),math.rad(-90),math.rad(0))*angles(math.rad(-20),math.rad(0),math.rad(0)),.2)
-	end
-	light.Range=0
-	for i=0,1,0.01 do
-		swait()
-		RootJoint.C0=clerp(RootJoint.C0,RootCF*cf(0,1,-2.5)*angles(math.rad(-90),math.rad(0),math.rad(180)),.2)
-		Torso.Neck.C0=clerp(Torso.Neck.C0,necko*angles(math.rad(0),math.rad(0),math.rad(90)),.4)
-		handleweld.C0=clerp(handleweld.C0,cf(0,10,-5)*angles(math.rad(60),math.rad(30),math.rad(30)),.2)
-		Handleweld.C0=clerp(Handleweld.C0,cf(0,20,-5)*angles(math.rad(150),math.rad(0),math.rad(0)),.2)
-		Handle2weld.C0=clerp(Handle2weld.C0,cf(0,20,-5)*angles(math.rad(90),math.rad(0),math.rad(0)),.2)
-		RW.C0=clerp(RW.C0,cf(1.5,0.5,0)*angles(math.rad(180),math.rad(0),math.rad(90)),.2)
-		LW.C0=clerp(LW.C0,cf(-1.5,0.5,0)*angles(math.rad(0),math.rad(0),math.rad(-90)),.2)
-		RH.C0=clerp(RH.C0,cf(1,-1,0)*angles(math.rad(0),math.rad(90),math.rad(0))*angles(math.rad(-20),math.rad(0),math.rad(0)),.2)
-		LH.C0=clerp(LH.C0,cf(-1,-1,0)*angles(math.rad(0),math.rad(-90),math.rad(0))*angles(math.rad(-20),math.rad(0),math.rad(0)),.2)
-	end
-	so("http://www.roblox.com/asset/?id=209527175",Head,1,0.9)
-	fire.Rate = 1000
-	fire2.Rate = 1000
-	fire3.Rate = 1000
-	fire4.Rate = 1000
-	Fire:Play()
-	Fire2:Play()
-	Fire3:Play()
-	Fire4:Play()
-	for i=0,1,0.005 do
-		swait()
-		Character.Head.face.Transparency = 0+1*i
-		LeftArm.Transparency=0+1*i
-		RightArm.Transparency=0+1*i
-		LeftLeg.Transparency=0+1*i
-		RightLeg.Transparency=0+1*i
-		Head.Transparency=0+1*i
-		Torso.Transparency=0+1*i
-		for _,v in pairs(Character:children()) do
-			if v:IsA("Hat") then
-				v.Handle.Transparency = 0+1*i
-				RootJoint.C0=clerp(RootJoint.C0,RootCF*cf(0,1,-2.5)*angles(math.rad(-90),math.rad(0),math.rad(180)),.2)
-				Torso.Neck.C0=clerp(Torso.Neck.C0,necko*angles(math.rad(0),math.rad(0),math.rad(90)),.4)
-				handleweld.C0=clerp(handleweld.C0,cf(0,10,-5)*angles(math.rad(60),math.rad(30),math.rad(30)),.2)
-				Handleweld.C0=clerp(Handleweld.C0,cf(0,20,-5)*angles(math.rad(150),math.rad(0),math.rad(0)),.2)
-				Handle2weld.C0=clerp(Handle2weld.C0,cf(0,20,-5)*angles(math.rad(90),math.rad(0),math.rad(0)),.2)
-				RW.C0=clerp(RW.C0,cf(1.5,0.5,0)*angles(math.rad(180),math.rad(0),math.rad(90)),.2)
-				LW.C0=clerp(LW.C0,cf(-1.5,0.5,0)*angles(math.rad(0),math.rad(0),math.rad(-90)),.2)
-				RH.C0=clerp(RH.C0,cf(1,-1,0)*angles(math.rad(0),math.rad(90),math.rad(0))*angles(math.rad(-20),math.rad(0),math.rad(0)),.2)
-				LH.C0=clerp(LH.C0,cf(-1,-1,0)*angles(math.rad(0),math.rad(-90),math.rad(0))*angles(math.rad(-20),math.rad(0),math.rad(0)),.2)
+equipanim()
+
+local sine = 0
+local change = 1
+local val = 0
+
+local mananum=0
+local function mainLoop()
+while true do
+	swait()
+	sine = sine + change
+	local torvel=(RootPart.Velocity*Vector3.new(1,0,1)).magnitude
+	local velderp=RootPart.Velocity.y
+	hitfloor,posfloor=rayCast(RootPart.Position,(CFrame.new(RootPart.Position,RootPart.Position - Vector3.new(0,1,0))).lookVector,4,Character)
+	if equipped==true or equipped==false then
+		if Anim=="Idle" and attack==false then
+			idle=idle+1
+		else
+			idle=0
+		end
+		if idle>=1000 then
+			if attack==false then
+
 			end
 		end
+		if RootPart.Velocity.y > 1 and hitfloor==nil then
+			Anim="Jump"
+			if attack==false then
+				Footsteps:Stop()
+				Footsteps2:Stop()
+				Neck.C0=clerp(Neck.C0,necko*euler(-0.2,0,0),.3)
+				Neck.C1=clerp(Neck.C1,necko2*euler(0,0,0),.3)
+				RootJoint.C0=clerp(RootJoint.C0,RootCF*cf(0,0,0),.3)
+				RW.C0=clerp(RW.C0,cf(1.5,0.5,0)*euler(-.25,0,0.5),.3)
+				RW.C1=clerp(LW.C1,cf(0,0.5,0)*euler(0,0,0),.3)
+				LW.C0=clerp(LW.C0,cf(-1.5,0.5,0)*euler(-.25,0,-0.5),.3)
+				LW.C1=clerp(LW.C1,cf(0,0.5,0)*euler(0,0,0),.3)
+				RH.C0=clerp(RH.C0,cf(1,0,-.75)*euler(-0.5,1.57,0)*euler(0,0,0),.2)
+				LH.C0=clerp(LH.C0,cf(-1,-1,-.3)*euler(-0.5,-1.57,0)*euler(0,0,0),.2)
+				handleweld.C0=clerp(handleweld.C0,cf(0,0,0)*angles(math.rad(20),math.rad(0),math.rad(0)),.2)
+				Handleweld.C0=clerp(Handleweld.C0,cf(0,0,0)*angles(math.rad(20),math.rad(20),math.rad(0)),.2)
+				Handle2weld.C0=clerp(Handle2weld.C0,cf(0,0,0)*angles(math.rad(20),math.rad(-20),math.rad(0)),.2)
+			end
+		elseif RootPart.Velocity.y < -1 and hitfloor==nil then
+			Anim="Fall"
+			if attack==false then
+				Footsteps:Stop()
+				Footsteps2:Stop()
+				Neck.C0=clerp(Neck.C0,necko*euler(0.3,0,0),.3)
+				Neck.C1=clerp(Neck.C1,necko2*euler(0,0,0),.3)
+				RootJoint.C0=clerp(RootJoint.C0,RootCF*cf(0,0,0)*euler(0,0,0),.3)
+				RW.C0=clerp(RW.C0,cf(1.5,0.5,0)*euler(0.1,0,1),.3)
+				RW.C1=clerp(LW.C1,cf(0,0.5,0)*euler(0,0,0),.3)
+				LW.C0=clerp(LW.C0,cf(-1.5,0.5,0)*euler(0.1,0,-1),.3)
+				LW.C1=clerp(LW.C1,cf(0,0.5,0)*euler(0,0,0),.3)
+				RH.C0=clerp(RH.C0,cf(1,-1,0)*euler(0.6,1.57,0)*euler(0,0,0),.2)
+				LH.C0=clerp(LH.C0,cf(-1,-1,0)*euler(-0.8,-1.57,0)*euler(0,0,0),.2)
+				handleweld.C0=clerp(handleweld.C0,cf(0,0,-1)*angles(math.rad(-20),math.rad(0),math.rad(0)),.2)
+				Handleweld.C0=clerp(Handleweld.C0,cf(0,-1,0)*angles(math.rad(-20),math.rad(-10),math.rad(0)),.2)
+				Handle2weld.C0=clerp(Handle2weld.C0,cf(0,-1,0)*angles(math.rad(-20),math.rad(10),math.rad(0)),.2)
+			end
+		elseif torvel<1 and hitfloor~=nil then
+			Anim="Idle"
+			change=0.5
+			if idle>=1000 then
+				if attack==false then
+					Footsteps:Stop()
+					Footsteps2:Stop()
+					Humanoid.WalkSpeed=12
+					RootJoint.C0=clerp(RootJoint.C0,RootCF*cf(0,0,6-0.25*math.cos(sine/5))*angles(math.rad(0),math.rad(0),math.rad(50)),.1)
+					Neck.C0=clerp(Neck.C0,necko*angles(math.rad(5+2*math.cos(sine/5.5)),math.rad(-5-2*math.cos(sine/5.5)),math.rad(-50)),.1)
+					Neck.C1=clerp(Neck.C1,necko2*euler(0,0,0),.1)
+					RW.C0=clerp(RW.C0,cf(0.8,0.3,-0.5)*angles(math.rad(70),math.rad(0),math.rad(-85)),.5)
+					LW.C0=clerp(LW.C0,cf(-0.6,0.5,-0.7)*angles(math.rad(70),math.rad(0),math.rad(85)),.5)
+					RH.C0=clerp(RH.C0,cf(1,-1,0)*angles(math.rad(0),math.rad(90),math.rad(0))*angles(math.rad(0),math.rad(0),math.rad(0)),.1)
+					LH.C0=clerp(LH.C0,cf(-1,-1,0)*angles(math.rad(0),math.rad(-90),math.rad(0))*angles(math.rad(0),math.rad(0),math.rad(0)),.1)
+					handleweld.C0=clerp(handleweld.C0,cf(3.2,-1,-2)*angles(math.rad(90),math.rad(0),math.rad(60)),.3)
+					Handleweld.C0=clerp(Handleweld.C0,cf(-2,-1.5+1*math.cos(sine/50),6)*angles(math.rad(60),math.rad(-25),math.rad(-90)),.4)
+					Handle2weld.C0=clerp(Handle2weld.C0,cf(5,1.5-0.5*math.cos(sine/50),-5)*angles(math.rad(-110),math.rad(25),math.rad(60)),.3)
+				end
+			else
+				if attack==false then
+					Footsteps:Stop()
+					Footsteps2:Stop()
+					Humanoid.WalkSpeed=12
+					RootJoint.C0=clerp(RootJoint.C0,RootCF*cf(0,0,0)*angles(math.rad(6),math.rad(0),math.rad(0)),.3)
+					Neck.C0=clerp(Neck.C0,necko*angles(math.rad(3+3*math.cos(sine/36)),math.rad(0),math.rad(0)),.3)
+					Neck.C1=clerp(Neck.C1,necko2*euler(0,0,0),.3)
+					RW.C0=clerp(RW.C0,cf(1.5,0.5,0)*angles(math.rad(10),math.rad(0),math.rad(16-6*math.cos(sine/28))),.3)
+					LW.C0=clerp(LW.C0,cf(-1.5,0.5,0)*angles(math.rad(10),math.rad(0),math.rad(-16+6*math.cos(sine/28))),.3)
+					RH.C0=clerp(RH.C0,cf(1,-1,0)*angles(math.rad(0),math.rad(90),math.rad(0))*angles(math.rad(-5),math.rad(0),math.rad(16)),.3)
+					LH.C0=clerp(LH.C0,cf(-1,-1.1,0)*angles(math.rad(0),math.rad(-90),math.rad(0))*angles(math.rad(-5),math.rad(0),math.rad(24)),.3)
+					handleweld.C0=clerp(handleweld.C0,cf(0-1*math.cos(sine/40),0-0.5*math.cos(sine/20),0)*angles(math.rad(-5+5*math.cos(sine/20)),math.rad(0),math.rad(0)),.2)
+					Handleweld.C0=clerp(Handleweld.C0,cf(0-1*math.cos(sine/30),0,0-1*math.cos(sine/30))*angles(math.rad(0+8*math.cos(sine/30)),math.rad(0),math.rad(0-8*math.cos(sine/30))),.2)
+					Handle2weld.C0=clerp(Handle2weld.C0,cf(0+1*math.cos(sine/36),0,0+1*math.cos(sine/36))*angles(math.rad(0-12*math.cos(sine/36)),math.rad(0),math.rad(0-12*math.cos(sine/36))),.2)
+				end
+			end
+		elseif torvel>2 and torvel<22 and hitfloor~=nil then
+			Anim="Walk"
+			if attack==false then
+				change=0.8
 
+				Footsteps:Play()
+				Footsteps2:Stop()
+				RootJoint.C0=clerp(RootJoint.C0,RootCF*cf(0,0,0+0.1*math.cos(sine/2.5))*angles(math.rad(10+1*math.cos(sine/2.5)),math.rad(0),math.rad(1-5*math.cos(sine/5))),.3)
+				Neck.C0=clerp(Neck.C0,necko*euler(0+0.075*math.cos(sine/2.5),0,0)*angles(math.rad(0),math.rad(0),math.rad(1+5*math.cos(sine/5))),.3)
+				Neck.C1=clerp(Neck.C1,necko2*euler(0,0,0),.3)
+				RW.C0=clerp(RW.C0,cf(1.4+0.25*math.cos(sine/5),0.5+0.25*math.cos(sine/5),-0.2+0.5*math.cos(sine/5))*angles(math.rad(20-60*math.cos(sine/5)),math.rad(0),math.rad(-4+30*math.cos(sine/5))),.3)
+				LW.C0=clerp(LW.C0,cf(-1.4+0.25*math.cos(sine/5),0.5-0.25*math.cos(sine/5),-0.2-0.5*math.cos(sine/5))*angles(math.rad(20+60*math.cos(sine/5)),math.rad(0),math.rad(4+30*math.cos(sine/5))),.3)
+				RH.C0=clerp(RH.C0,cf(1,-1-0.1*math.cos(sine/5),0-0.25*math.cos(sine/5))*angles(math.rad(0),math.rad(90),math.rad(0))*angles(math.rad(-2.5),math.rad(0),math.rad(0+50*math.cos(sine/5))),.3)
+				LH.C0=clerp(LH.C0,cf(-1,-1+0.1*math.cos(sine/5),0+0.25*math.cos(sine/5))*angles(math.rad(0),math.rad(-90),math.rad(0))*angles(math.rad(-2.5),math.rad(0),math.rad(0+50*math.cos(sine/5))),.3)
+				handleweld.C0=clerp(handleweld.C0,cf(0,0,0)*angles(math.rad(0),math.rad(0),math.rad(0)),.2)
+				Handleweld.C0=clerp(Handleweld.C0,cf(0-.5*math.cos(sine/30),0,0-.5*math.cos(sine/30))*angles(math.rad(0+1*math.cos(sine/30)),math.rad(-30),math.rad(0-1*math.cos(sine/30))),.2)
+				Handle2weld.C0=clerp(Handle2weld.C0,cf(0+.5*math.cos(sine/36),0,0+.5*math.cos(sine/36))*angles(math.rad(0-3*math.cos(sine/36)),math.rad(30),math.rad(0-3*math.cos(sine/36))),.2)
+			end
+		elseif torvel>=22 and hitfloor~=nil then
+			Anim="Run"
+			change=1
+			if attack==false then
+				Footsteps:Stop()
+				Footsteps2:Play()
+				RootJoint.C0=clerp(RootJoint.C0,RootCF*cf(0,0,0+0.1*math.cos(sine/2.5))*angles(math.rad(20+1*math.cos(sine/2.5)),math.rad(0),math.rad(0)),.3)
+				Neck.C0=clerp(Neck.C0,necko*euler(-0.2+0.075*math.cos(sine/2.5),0,0),.3)
+				Neck.C1=clerp(Neck.C1,necko2*euler(0,0,0),.3)
+				RW.C0=clerp(RW.C0,cf(1.5,0.5,0)*angles(math.rad(-40),math.rad(0),math.rad(24)),.3)
+				LW.C0=clerp(LW.C0,cf(-1.5,0.5,0)*angles(math.rad(-40),math.rad(0),math.rad(-24)),.3)
+				RH.C0=clerp(RH.C0,cf(1,-1-0.1*math.cos(sine/5),0-0.5*math.cos(sine/5))*angles(math.rad(0),math.rad(90),math.rad(0))*angles(math.rad(-5),math.rad(0),math.rad(0+70*math.cos(sine/5))),.3)
+				LH.C0=clerp(LH.C0,cf(-1,-1+0.1*math.cos(sine/5),0+0.5*math.cos(sine/5))*angles(math.rad(0),math.rad(-90),math.rad(0))*angles(math.rad(-5),math.rad(0),math.rad(0+70*math.cos(sine/5))),.3)
+				handleweld.C0=clerp(handleweld.C0,cf(0,0,0)*angles(math.rad(0),math.rad(0),math.rad(0)),.2)
+				Handleweld.C0=clerp(Handleweld.C0,cf(0-.5*math.cos(sine/30),0,0-.5*math.cos(sine/30))*angles(math.rad(0+1*math.cos(sine/30)),math.rad(-60),math.rad(0-1*math.cos(sine/30))),.2)
+				Handle2weld.C0=clerp(Handle2weld.C0,cf(0+.5*math.cos(sine/36),0,0+.5*math.cos(sine/36))*angles(math.rad(0-3*math.cos(sine/36)),math.rad(60),math.rad(0-3*math.cos(sine/36))),.2)
+			end
+		end
 	end
-	Humanoid.Health = 0
+	fenbarmana2:TweenSize(UDim2.new(4*mana/100,0,0.2,0),nil,1,0.4,true)
+	fenbarmana4.Text="[Energy]                    <{[  "..mana.."  ]}>                    [Energy]"
+	if mana>=100 then
+		mana=100
+	else
+		if mananum<=8 then
+			mananum=mananum+1
+		else
+			mananum=0
+			mana=mana+1
+		end
+	end
 end
-
-equipanim()
+end
